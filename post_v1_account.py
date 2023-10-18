@@ -28,4 +28,3 @@ def post_v1_account():
       json=payload)
 
     return response
-
