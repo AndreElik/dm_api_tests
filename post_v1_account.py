@@ -25,6 +25,7 @@ def post_v1_account():
       method="POST",
       url=url,
       headers=headers,
-      json=payload)
+      json=payload
+    )
 
     return response

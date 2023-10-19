@@ -20,4 +20,11 @@ def post_v1_account():
       'Accept': 'text/plain'
     }
 
-    response = requests.request("POST", url, headers=headers, json=payload)
+    response = requests.request(
+        method="POST",
+        url=url,
+        headers=headers,
+        json=payload
+    )
+
+    return response
