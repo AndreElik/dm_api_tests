@@ -1,4 +1,4 @@
-reset_password_maodel = {
+reset_password_model = {
             "login": "<string>",
             "email": "<string>"
 }
