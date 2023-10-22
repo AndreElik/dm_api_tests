@@ -5,7 +5,7 @@ from requests import session
 
 
 class LoginApi:
-    def __int__(self, host, headers=None):
+    def __init__(self, host, headers=None):
         self.host = host
         self.session = session()
         if headers:

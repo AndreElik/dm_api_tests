@@ -8,7 +8,7 @@ from requests import session
 
 
 class AccountApi:
-    def __int__(self, host, headers=None):
+    def __init__(self, host: str, headers=None):
         self.host = host
         self.headers = headers
         self.session = session()
