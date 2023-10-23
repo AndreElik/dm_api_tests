@@ -1,5 +1,5 @@
 import requests
-from serviceces.dm_api_account import DmApiAccount
+from services.dm_api_account import DmApiAccount
 
 
 def test_post_v1_account():
