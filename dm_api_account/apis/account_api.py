@@ -1,11 +1,12 @@
 import requests
 from requests import Response
-from ..models.registation_model import registration_model
+from ..models.registation_model import RegistrationModel
 from ..models.reset_password_model import reset_password_model
 from ..models.change_registere_user_email_model import change_registered_user_email_model
 from ..models.change_registered_user_password_model import change_registered_user_password_model
 from requests import session
 from restclient.restclient import Restclient
+from dm_api_account.models.user_evelope_model import  UserEnvelopeModel
 
 
 class AccountApi:
@@ -16,7 +17,7 @@ class AccountApi:
         if headers:
             self.client.session.headers.update(headers)
 
-    def post_v1_account(self, json: registration_model, **kwargs) -> Response:
+    def post_v1_account(self, json: RegistrationModel, **kwargs) -> Response:
         """
         :param json registration_model
         Register new user
@@ -25,7 +26,7 @@ class AccountApi:
 
         response = self.client.post(
             path=f"/v1/account",
-            json=json,
+            json=json.dict(by_alias=True, exclude_none=True),
             **kwargs
         )
 
@@ -69,7 +70,7 @@ class AccountApi:
             path=f"/v1/account/{token}",
             **kwargs
         )
-
+        UserEnvelopeModel(**response.json()).model_dump(by_alias=True, exclude_none=True)
         return response
 
     def put_v1_account_email(self, json: change_registered_user_email_model, **kwargs) -> Response:
