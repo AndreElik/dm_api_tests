@@ -1,6 +1,6 @@
 import requests
 from requests import Response
-from ..models.authenticate_via_credentials_model import authenticate_via_credentials_model
+from ..models.authenticate_via_credentials_model import AuthenticateViaCredentialsModel
 from requests import session
 from restclient.restclient import Restclient
 
@@ -37,7 +37,9 @@ class LoginApi:
 
         return response
 
-    def post_v1_account_login(self, json: authenticate_via_credentials_model, **kwargs) -> Response:
+    def post_v1_account_login(self,
+                              json: AuthenticateViaCredentialsModel,
+                              **kwargs) -> Response:
         """
         Authenticate via credentials
         :param json authenticate_via_credentials_model
@@ -46,7 +48,7 @@ class LoginApi:
 
         response = self.client.post(
             path=f"/v1/account/login",
-            json=json,
+            json=json.model_dump(by_alias=True, exclude_none=True),
             **kwargs
         )
 

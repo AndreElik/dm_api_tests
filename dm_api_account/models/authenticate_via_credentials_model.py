@@ -1,7 +1,9 @@
-from pydantic import BaseModel, StrictStr
+from pydantic import BaseModel, StrictStr, Field, StrictBool
 
 
 class AuthenticateViaCredentialsModel(BaseModel):
     login: StrictStr
-    email: StrictStr
     password: StrictStr
+    remember_me: StrictBool = Field(None, alias='rememberMe')
+
+

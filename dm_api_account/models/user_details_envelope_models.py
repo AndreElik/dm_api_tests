@@ -1,5 +1,5 @@
 from typing import List, Optional
-from pydantic import BaseModel, Field, StrictStr
+from pydantic import BaseModel, Field, StrictStr, StrictInt
 from enum import Enum
 from datetime import datetime
 
@@ -31,6 +31,28 @@ class Info(BaseModel):
     parse_mode: BbParseMode
 
 
+class ColorSchema(Enum):
+    MODERN = 'Modern'
+    PALE = 'Pale'
+    CLASSIC = 'Classic'
+    CLASSIC_PALE = 'ClassicPale'
+    NIGHT = 'Night'
+
+
+class PagingSetting(BaseModel):
+    posts_per_page: Optional[StrictInt] = Field(None, alias='postsPerPage')
+    comments_per_page: Optional[StrictInt] = Field(None, alias='commentsPerPage')
+    topics_per_page: Optional[StrictInt] = Field(None, alias='topicsPerPage')
+    messages_per_page: Optional[StrictInt] = Field(None, alias='messagesPerPage')
+    entities_per_page: Optional[StrictInt] = Field(None, alias='entitiesPerPage	')
+
+
+class UserSettings(BaseModel):
+    color_schema: Optional[ColorSchema] = Field(None, alias='colorSchema')
+    nanny_greetings_message: Optional[StrictStr] = Field(None, alias='nannyGreetingsMessage')
+    paging: Optional[PagingSetting]
+
+
 class User(BaseModel):
     login: StrictStr
     roles: List[Roles]
@@ -46,6 +68,7 @@ class User(BaseModel):
     skype: Optional[StrictStr] = Field(None)
     original_picture_url: Optional[StrictStr] = Field(None, alias='originalPictureUrl')
     info: Optional[Info]
+    settings: Optional[UserSettings]
 
 
 class UserDetailsEnvelopeModel(BaseModel):
