@@ -2,34 +2,52 @@ from services.dm_api_account import DmApiAccount
 from services.mailhog import MailHogApi
 import structlog
 from time import sleep
+from dm_api_account.models.reset_password_model import ResetPasswordModel
 from dm_api_account.models.registation_model import RegistrationModel
 from dm_api_account.models.change_registered_user_password_model import ChangeRegisteredUserPasswordModel
+from dm_api_account.models.user_evelope_model import Roles
+from hamcrest import assert_that, has_properties
+
 
 structlog.configure(processors=[structlog.processors.JSONRenderer(indent=4, sort_keys=True, ensure_ascii=False)])
 
 
-def test_put_v1_account_email():
+def test_put_v1_account_password():
     mailhog = MailHogApi(host='http://5.63.153.31:5025')
     api = DmApiAccount(host='http://5.63.153.31:5051')
-    login = "user_208"
+    login = "user_317"
     password = "123456qwerty"
-    email = "user_208@gmail.com"
-    json = RegistrationModel(
+    email = "user_317@gmail.com"
+    # json = RegistrationModel(
+    #     login=login,
+    #     email=email,
+    #     password=password
+    # )
+    # api.account.post_v1_account(json=json)
+    # sleep(2)
+    # token = mailhog.get_token_from_last_email()
+    # api.account.put_v1_account(token=token)
+    json = ResetPasswordModel(
         login=login,
-        email=email,
-        password=password
+        email=email
     )
-    response = api.account.post_v1_account(json=json)
-    assert response.status_code == 201, f'статус код ответа должен быть 201, но он равен {response.status_code}'
-    sleep(2)
-    token = mailhog.get_token_from_last_email()
-    response = api.account.put_v1_account(token=token)
-    assert response.status_code == 200, f'статус код ответа должен быть 200, но он равен {response.status_code}'
+    api.account.post_v1_account_password(json=json)
+    reset_password_token = mailhog.get_token_for_reset_password()
     json_for_change_password = ChangeRegisteredUserPasswordModel(
-        login=login,
-        token=token,
-        old_password=password,
-        new_password="124456qwerty"
-    )
+        login=login, token=reset_password_token,
+        oldPassword=password, newPassword='124564875'
+        )
     response = api.account.put_v1_account_password(json=json_for_change_password)
-    assert response.status_code == 200, f'статус код ответа должен быть 200, но он равен {response.status_code}'
+    print(response.resource.model_dump())
+    assert_that(response.resource, has_properties(
+        {"login": "user_317",
+         "roles": [Roles.GUEST, Roles.PLAYER]
+         }
+    ))
+    assert_that(response.resource.rating, has_properties(
+        {"enabled": True,
+         "quality": 0,
+         "quantity": 0
+         }
+    ))
+

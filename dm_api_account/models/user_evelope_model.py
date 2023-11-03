@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Any
 from pydantic import BaseModel, Field, StrictStr
 from enum import Enum
 from datetime import datetime
@@ -34,5 +34,5 @@ class User(BaseModel):
 
 class UserEnvelopeModel(BaseModel):
     resource: User
-    metadata: Optional[StrictStr] = Field(None)
+    metadata: Optional[Any] = Field(None, description='Additional metadata')
 

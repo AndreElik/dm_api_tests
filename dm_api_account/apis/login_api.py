@@ -1,8 +1,8 @@
 import requests
 from requests import Response
-from ..models.authenticate_via_credentials_model import AuthenticateViaCredentialsModel
-from requests import session
+from ..models import *
 from restclient.restclient import Restclient
+from ..utilities import validate_request_json, validate_status_code
 
 
 class LoginApi:
@@ -12,7 +12,11 @@ class LoginApi:
         if headers:
             self.client.session.headers.update(headers)
 
-    def delete_v1_account_login(self, **kwargs) -> Response:
+    def delete_v1_account_login(
+            self,
+            status_code: int = 204,
+            **kwargs
+    ) -> Response:
         """
         Logout as current user
         :return:
@@ -21,10 +25,10 @@ class LoginApi:
             path=f"/v1/account/login",
             **kwargs
         )
-
+        validate_status_code(response=response, status_code=status_code)
         return response
 
-    def delete_v1_account_login_all(self, **kwargs) -> Response:
+    def delete_v1_account_login_all(self, status_code: int = 204, **kwargs) -> Response:
         """
         Logout from every device
         :return:
@@ -34,23 +38,28 @@ class LoginApi:
             path=f"/v1/account/login/all",
             **kwargs
         )
-
+        validate_status_code(response=response, status_code=status_code)
         return response
 
     def post_v1_account_login(self,
                               json: AuthenticateViaCredentialsModel,
-                              **kwargs) -> Response:
+                              status_code: int = 200,
+                              **kwargs
+                              ) -> Response | UserEnvelopeModel:
         """
         Authenticate via credentials
+        :param status_code:
         :param json authenticate_via_credentials_model
         :return:
         """
 
         response = self.client.post(
             path=f"/v1/account/login",
-            json=json.model_dump(by_alias=True, exclude_none=True),
+            json=validate_request_json(json),
             **kwargs
         )
-
+        validate_status_code(response=response, status_code=status_code)
+        if response.status_code == 200:
+            return UserEnvelopeModel(**response.json())
         return response
 

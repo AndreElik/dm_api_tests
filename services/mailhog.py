@@ -37,5 +37,15 @@ class MailHogApi:
         token = token_url.split('/')[-1]
         return token
 
+    def get_token_for_reset_password(self) -> str:
+        """
+        Get user activation token from last email
+        :return:
+        """
+        email = self.get_api_v2_messages(limit=1).json()
+        token_url = json.loads(email['items'][0]['Content']['Body'])['ConfirmationLinkUri']
+        token = token_url.split('/')[-1]
+        return token
+
 
 
