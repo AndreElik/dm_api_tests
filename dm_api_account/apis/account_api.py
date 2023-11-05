@@ -66,7 +66,7 @@ class AccountApi:
             return UserEnvelopeModel(**response.json())
         return response
 
-    def put_v1_account(self, token: str, status_code: int = 200,  **kwargs) -> Response | UserEnvelopeModel:
+    def put_v1_account_token(self, token: str, status_code: int = 200, **kwargs) -> Response | UserEnvelopeModel:
         """
         Activate registered user
         :param status_code

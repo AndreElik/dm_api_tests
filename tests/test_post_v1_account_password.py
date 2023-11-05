@@ -1,8 +1,6 @@
 from dm_api_account.models import ResetPasswordModel
-from services.dm_api_account import DmApiAccount
-from services.mailhog import MailHogApi
+from services.dm_api_account import Faced
 import structlog
-from time import sleep
 from dm_api_account.models.user_evelope_model import Roles
 from hamcrest import assert_that, has_properties
 
@@ -11,7 +9,7 @@ structlog.configure(processors=[structlog.processors.JSONRenderer(indent=4, sort
 
 def test_post_v1_account_password():
 
-    api = DmApiAccount(host='http://5.63.153.31:5051')
+    api = Faced(host='http://5.63.153.31:5051')
     login = "user_312"
     password = "123456qwerty"
     email = "user_312@gmail.com"
@@ -20,7 +18,7 @@ def test_post_v1_account_password():
         email=email
     )
 
-    response = api.account.post_v1_account_password(json=json)
+    response = api.account_api.post_v1_account_password(json=json)
     assert_that(response.resource, has_properties(
         {"login": "user_312",
          "roles": [Roles.GUEST, Roles.PLAYER]
