@@ -1,5 +1,5 @@
 from typing import List, Optional, Any
-from pydantic import BaseModel, Field, StrictStr
+from pydantic import BaseModel, Field, StrictStr, StrictInt
 from enum import Enum
 from datetime import datetime
 
@@ -15,8 +15,8 @@ class Roles(Enum):
 
 class Rating(BaseModel):
     enabled: bool
-    quality: int
-    quantity: int
+    quality: StrictInt
+    quantity: StrictInt
 
 
 class User(BaseModel):

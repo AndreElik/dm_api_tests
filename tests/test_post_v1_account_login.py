@@ -4,6 +4,8 @@ import structlog
 from time import sleep
 from dm_api_account.models.registation_model import RegistrationModel
 from dm_api_account.models.authenticate_via_credentials_model import AuthenticateViaCredentialsModel
+from dm_api_account.models.user_evelope_model import User, Roles, Rating
+from hamcrest import assert_that, has_properties
 
 
 structlog.configure(
@@ -36,5 +38,15 @@ def test_post_v1_account_login():
             remember_me=True
     )
     response = api.login.post_v1_account_login(json=json_for_login, status_code=200)
-    print(response.resource.model_dump(by_alias=True, exclude_none=True))
+    assert_that(response.resource, has_properties(
+        {"login": "user_304",
+         "roles": [Roles.GUEST, Roles.PLAYER]
+         }
+    ))
+    assert_that(response.resource.rating, has_properties(
+        {"enabled": True,
+         "quality": 0,
+         "quantity": 0
+         }
+    ))
 
