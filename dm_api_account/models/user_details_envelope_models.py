@@ -20,15 +20,15 @@ class Rating(BaseModel):
 
 
 class BbParseMode(Enum):
-    COMMON = 'Common'
-    INFO = 'Info'
-    POST = 'Post'
-    CHAT = 'Chat'
+    common = 'Common'
+    info = 'Info'
+    post = 'Post'
+    chat = 'Chat'
 
 
-class Info(BaseModel):
-    value: Optional[StrictStr] = Field(None)
-    parse_mode: BbParseMode
+class InfoBbText(BaseModel):
+    value: Optional[StrictStr] = None
+    parse_mode: Optional[BbParseMode] = Field(None, alias='parseMode')
 
 
 class ColorSchema(Enum):
@@ -67,7 +67,7 @@ class User(BaseModel):
     icq: Optional[StrictStr] = Field(None)
     skype: Optional[StrictStr] = Field(None)
     original_picture_url: Optional[StrictStr] = Field(None, alias='originalPictureUrl')
-    info: Optional[Info]
+    info: Optional[StrictStr] = Field(None)
     settings: Optional[UserSettings]
 
 

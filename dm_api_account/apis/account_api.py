@@ -31,7 +31,7 @@ class AccountApi:
         validate_status_code(response=response, status_code=status_code)
         return response
 
-    def get_v1_account(self, status_code=200, **kwargs) -> UserDetailsEnvelopeModel | Any:
+    def get_v1_account(self, status_code: int = 200, **kwargs) -> UserDetailsEnvelopeModel | Any:
         """
         Get current user
         :return:
@@ -62,7 +62,7 @@ class AccountApi:
             **kwargs
         )
         validate_status_code(response=response,  status_code=status_code)
-        if response.status_code == 200:
+        if response.status_code == 201:
             return UserEnvelopeModel(**response.json())
         return response
 

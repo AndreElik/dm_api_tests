@@ -1,7 +1,10 @@
+from typing import Tuple
+
 import requests
 from requests import Response
 from ..models import *
 from restclient.restclient import Restclient
+from ..models import UserEnvelopeModel
 from ..utilities import validate_request_json, validate_status_code
 
 
@@ -45,7 +48,7 @@ class LoginApi:
                               json: AuthenticateViaCredentialsModel,
                               status_code: int = 200,
                               **kwargs
-                              ) -> Response | UserEnvelopeModel:
+                              ) -> tuple[Response, UserEnvelopeModel] | Response:
         """
         Authenticate via credentials
         :param status_code:
@@ -60,6 +63,6 @@ class LoginApi:
         )
         validate_status_code(response=response, status_code=status_code)
         if response.status_code == 200:
-            return UserEnvelopeModel(**response.json())
+            UserEnvelopeModel(**response.json())
         return response
 

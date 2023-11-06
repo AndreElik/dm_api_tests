@@ -51,15 +51,21 @@ class MailHogApi:
         token = token_url.split('/')[-1]
         return token
 
-    def get_token_for_reset_password(self) -> str:
+    def get_token_for_reset_password(self, login: str, attempt=50) -> str:
         """
         Get user activation token from last email
         :return:
         """
-        email = self.get_api_v2_messages(limit=1).json()
-        token_url = json.loads(email['items'][0]['Content']['Body'])['ConfirmationLinkUri']
-        token = token_url.split('/')[-1]
-        return token
+        if attempt == 0:
+            raise AssertionError(f'Не удалось получить письмо с логином {login}')
+        emails = self.get_api_v2_messages(limit=100).json()['items']
+        for email in emails:
+            user_data = json.loads(email['Content']['Body'])
+            if login == user_data.get('Login'):
+                token = user_data['ConfirmationLinkUri'].split('/')[-1]
+                return token
+        time.sleep(2)
+        return self.get_token_by_login(login=login, attempt=attempt-1)
 
     def get_token_by_login(self, login: str, attempt=50):
         if attempt == 0:
@@ -71,7 +77,7 @@ class MailHogApi:
                 token = user_data['ConfirmationLinkUrl'].split('/')[-1]
                 return token
         time.sleep(2)
-        return self.get_token_by_login(login=login, attempt=attempt -1):
+        return self.get_token_by_login(login=login, attempt=attempt-1)
 
 
 
