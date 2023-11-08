@@ -25,7 +25,7 @@ class Restclient:
     def delete(self, path: str, **kwargs):
         return self._send_request('DELETE', path, **kwargs)
 
-    def _send_request(self, method,  path, **kwargs):
+    def _send_request(self, method, path, **kwargs):
         full_url = self.host + path
         log = self.log.bind(event_id=str(uuid4()))
         log.msg(event='request',
@@ -41,7 +41,7 @@ class Restclient:
             url=full_url,
             **kwargs
         )
-        curl= curlify.to_curl(response.request)
+        curl = curlify.to_curl(response.request)
         print(curl)
         log.msg(event='response',
                 status_code=response.status_code,

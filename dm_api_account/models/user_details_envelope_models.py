@@ -20,10 +20,10 @@ class Rating(BaseModel):
 
 
 class BbParseMode(Enum):
-    common = 'Common'
-    info = 'Info'
-    post = 'Post'
-    chat = 'Chat'
+    COMMON = 'Common'
+    INFO = 'Info'
+    POST = 'Post'
+    CHAT = 'Chat'
 
 
 class InfoBbText(BaseModel):

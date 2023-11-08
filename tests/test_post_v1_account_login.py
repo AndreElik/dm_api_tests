@@ -1,8 +1,7 @@
+from hamcrest import assert_that, has_properties
+from dm_api_account.models.user_evelope_model import Roles
 from services.dm_api_account import Faced
 import structlog
-from time import sleep
-
-
 
 structlog.configure(
     processors=[structlog.processors.JSONRenderer(
@@ -18,29 +17,24 @@ def test_post_v1_account_login():
     login = "user_349"
     email = "user_349@gmail.com"
     password = "123456qwerty"
-    # Register new user
     response = api.account.register_new_user(
         login=login,
         email=email,
         password=password
     )
-    sleep(2)
-    # Activate registered user
     api.account.activate_registered_user()
-    # Login user
     api.login.login_user(
         login=login,
-        password=password)
+        password=password
+    )
 
-    # assert_that(response.resource, has_properties(
-    #     {"login": "user_304",
-    #      "roles": [Roles.GUEST, Roles.PLAYER]
-    #      }
-    # ))
-    # assert_that(response.resource.rating, has_properties(
-    #     {"enabled": True,
-    #      "quality": 0,
-    #      "quantity": 0
-    #      }
-    # ))
+    assert_that(response.resource, has_properties(
+        {"login": "user_417",
+         "roles": [Roles.GUEST, Roles.PLAYER],
+         "rating": {"enabled": True,
+                    "quality": 0,
+                    "quantity": 0
+                    }
+         }
 
+    ))

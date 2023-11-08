@@ -1,7 +1,6 @@
-from time import sleep
 import structlog
 from hamcrest import assert_that, has_properties
-
+from dm_api_account.models.user_details_envelope_models import Roles
 from services.dm_api_account import Faced
 
 structlog.configure(
@@ -17,25 +16,30 @@ structlog.configure(
 
 def test_get_v1_account():
     api = Faced(host='http://5.63.153.31:5051')
-    login = "user_376"
-    email = "user_376@gmail.com"
+    login = "user_412"
+    email = "user_412@gmail.com"
     password = "123456qwerty"
-    # Register new user
     api.account.register_new_user(
         login=login,
         email=email,
         password=password
     )
-    sleep(2)
-    # Activate registered user
     api.account.activate_registered_user(login=login)
-    # Login user
     api.login.login_user(
         login=login,
         password=password)
     token = api.login.get_auth_token(login=login, password=password)
     api.account.set_headers(headers=token)
-    api.account_api.get_v1_account()
+    response = api.account_api.get_v1_account()
+
+    assert_that(response.resource, has_properties(
+        {"login": "user_412",
+         "roles": [Roles.GUEST, Roles.PLAYER],
+         "info": ''
+         }
+
+    ))
+
 
 
 
