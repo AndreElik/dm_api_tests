@@ -57,11 +57,12 @@ class LoginApi:
         )
         return response
 
-    def post_v1_account_login(self,
-                              json: AuthenticateViaCredentialsModel,
-                              status_code: int = 200,
-                              **kwargs
-                              ) -> UserEnvelopeModel | Response:
+    def post_v1_account_login(
+            self,
+            json: AuthenticateViaCredentialsModel,
+            status_code: int = 200,
+            **kwargs
+    ) -> UserEnvelopeModel | Response:
         """
         Authenticate via credentials
         :param status_code:

@@ -63,11 +63,12 @@ class AccountApi:
             return UserDetailsEnvelopeModel(**response.json())
         return response
 
-    def post_v1_account_password(self,
-                                 json: ResetPasswordModel,
-                                 status_code: int = 200,
-                                 **kwargs
-                                 ) -> Response | UserEnvelopeModel:
+    def post_v1_account_password(
+            self,
+            json: ResetPasswordModel,
+            status_code: int = 200,
+            **kwargs
+    ) -> Response | UserEnvelopeModel:
         """
         Reset registered user password
         :param status_code:
@@ -113,11 +114,12 @@ class AccountApi:
             return UserEnvelopeModel(**response.json())
         return response
 
-    def put_v1_account_email(self,
-                             json: ChangeRegisteredUserEmailModel,
-                             status_code=200,
-                             **kwargs
-                             ) -> Response | UserEnvelopeModel:
+    def put_v1_account_email(
+            self,
+            json: ChangeRegisteredUserEmailModel,
+            status_code=200,
+            **kwargs
+    ) -> Response | UserEnvelopeModel:
         """
         Change registered user email
         :param status_code
@@ -139,11 +141,12 @@ class AccountApi:
 
         return response
 
-    def put_v1_account_password(self,
-                                json: ChangeRegisteredUserPasswordModel,
-                                status_code=200,
-                                **kwargs
-                                ) -> Response | UserEnvelopeModel:
+    def put_v1_account_password(
+            self,
+            json: ChangeRegisteredUserPasswordModel,
+            status_code=200,
+            **kwargs
+    ) -> Response | UserEnvelopeModel:
         """
         Change registered user password
         :param status_code

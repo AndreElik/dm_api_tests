@@ -1,8 +1,8 @@
 from dm_api_account.apis.account_api import AccountApi
 from dm_api_account.apis.login_api import LoginApi
-from dm_api_account.helpers.account import Account
-from dm_api_account.helpers.login import Login
-from dm_api_account.helpers.mailhog import MailHogApi
+from dm_api_account.generic.helpers.account import Account
+from dm_api_account.generic.helpers.login import Login
+from dm_api_account.generic.helpers.mailhog import MailHogApi
 
 
 class Faced:

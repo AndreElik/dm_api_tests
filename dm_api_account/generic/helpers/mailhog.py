@@ -104,3 +104,7 @@ class MailHogApi:
             login=login,
             attempt=attempt - 1
         )
+
+    def delete_all_messages(self):
+        response = self.client.delete(path='/api/v1/messages')
+        return response

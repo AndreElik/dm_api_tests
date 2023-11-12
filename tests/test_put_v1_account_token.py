@@ -1,6 +1,6 @@
 import structlog
 from hamcrest import assert_that, has_properties
-from dm_api_account.models.user_evelope_model import Roles
+from dm_api_account.models.user_evelope_model import Roles, Rating
 from services.dm_api_account import Faced
 
 structlog.configure(processors=[structlog.processors.JSONRenderer(indent=4, sort_keys=True, ensure_ascii=False)])
@@ -18,15 +18,12 @@ def test_put_v1_account_token():
     )
     response = api.account.activate_registered_user()
     assert_that(response.resource, has_properties(
-        {"login": "user_349",
-         "roles": [Roles.GUEST, Roles.PLAYER]
+        {"login": "user_425",
+         "roles": [Roles.GUEST, Roles.PLAYER],
+         "rating": Rating(enabled=True,
+                          quality=0,
+                          quantity=0)
          }
-    ))
-    assert_that(response.resource.rating, has_properties(
-        {"enabled": True,
-         "quality": 0,
-         "quantity": 0
-         }
-    ))
 
+    ))
 

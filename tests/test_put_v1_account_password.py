@@ -1,5 +1,5 @@
 from hamcrest import assert_that, has_properties
-from dm_api_account.models.user_evelope_model import Roles
+from dm_api_account.models.user_evelope_model import Roles, Rating
 from services.dm_api_account import Faced
 import structlog
 
@@ -47,12 +47,10 @@ def test_put_v1_account_password():
     )
     assert_that(response.resource, has_properties(
         {"login": "user_425",
-         "roles": [Roles.GUEST, Roles.PLAYER]
+         "roles": [Roles.GUEST, Roles.PLAYER],
+         "rating": Rating(enabled=True,
+                          quality=0,
+                          quantity=0)
          }
-    ))
-    assert_that(response.resource.rating, has_properties(
-        {"enabled": True,
-         "quality": 0,
-         "quantity": 0
-         }
-    ))
+
+     ))
