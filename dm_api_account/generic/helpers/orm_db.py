@@ -23,13 +23,15 @@ class OrmDatabase:
         return dataset
 
     def delete_user_by_login(self, login):
-        query = User.__table__.delete().where(User.Login == login)
+        # query = User.__table__.delete().where(User.Login == login)
+        query = delete(User).where(User.Login == login)
         print(str(query))
         dataset = self.db.send_bulk_query(query=query)
         return dataset
 
     def update_users_activated_field(self, login):
-        query = User.__table__.update().where(User.Login == login).values(Activated=True)
+        # query = User.__table__.update().where(User.Login == login).values(Activated=True)
+        query = update(User).where(User.Login == login).values(Activated=True)
         dataset = self.db.send_bulk_query(query=query)
         return dataset
 
