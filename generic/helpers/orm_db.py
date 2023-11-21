@@ -1,10 +1,8 @@
 from typing import List
 
-from sqlalchemy.orm import aliased
-
-from dm_api_account.generic.helpers.orm_models import User, Base
+from generic.helpers.orm_models import User
 from dm_api_account.orm_client.orm_client import OrmClient
-from sqlalchemy import select, delete, update, table, column, Table
+from sqlalchemy import select, delete, update
 
 
 class OrmDatabase:
