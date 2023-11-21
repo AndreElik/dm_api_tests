@@ -1,4 +1,4 @@
-from dm_api_account.generic.helpers.dm_db import DmDatabase
+from generic.helpers.dm_db import DmDatabase
 from services.dm_api_account import Faced
 import structlog
 from dm_api_account.models.user_evelope_model import Roles, Rating, UserEnvelopeModel

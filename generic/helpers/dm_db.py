@@ -1,4 +1,4 @@
-from dm_api_account.db_client.db_client import DbClient
+from db_client.db_client import DbClient
 
 
 class DmDatabase:

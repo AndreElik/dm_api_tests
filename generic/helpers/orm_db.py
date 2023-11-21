@@ -1,7 +1,7 @@
 from typing import List
 
 from generic.helpers.orm_models import User
-from dm_api_account.orm_client.orm_client import OrmClient
+from orm_client.orm_client import OrmClient
 from sqlalchemy import select, delete, update
 
 

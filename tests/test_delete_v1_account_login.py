@@ -1,4 +1,4 @@
-from dm_api_account.generic.helpers.orm_db import OrmDatabase
+from generic.helpers.orm_db import OrmDatabase
 from services.dm_api_account import Faced
 import structlog
 

@@ -1,5 +1,5 @@
 from dm_api_account.models import ResetPasswordModel, ChangeRegisteredUserPasswordModel, ChangeRegisteredUserEmailModel
-from model import Registration
+from dm_api_account.models import RegistrationModel
 
 
 class Account:
@@ -20,9 +20,11 @@ class Account:
             status_code: int = 201
     ):
         response = self.faced.account_api.post_v1_account(
-            json=Registration(login=login,
-                              email=email,
-                              password=password),
+            json=RegistrationModel(
+                login=login,
+                email=email,
+                password=password
+            ),
             status_code=status_code
         )
         return response

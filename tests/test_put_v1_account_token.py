@@ -1,8 +1,8 @@
 import structlog
 from hamcrest import assert_that, has_properties
 
-from dm_api_account.generic.helpers.orm_db import OrmDatabase
 from dm_api_account.models.user_evelope_model import Roles, Rating
+from generic.helpers.orm_db import OrmDatabase
 from services.dm_api_account import Faced
 
 structlog.configure(processors=[structlog.processors.JSONRenderer(indent=4, sort_keys=True, ensure_ascii=False)])

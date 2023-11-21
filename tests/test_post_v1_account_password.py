@@ -1,9 +1,6 @@
-from time import sleep
-
 from hamcrest import assert_that, has_properties
-
-from dm_api_account.generic.helpers.orm_db import OrmDatabase
 from dm_api_account.models.user_evelope_model import Roles, Rating
+from generic.helpers.orm_db import OrmDatabase
 from services.dm_api_account import Faced
 import structlog
 
