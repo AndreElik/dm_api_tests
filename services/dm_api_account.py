@@ -3,13 +3,11 @@ from dm_api_account.apis.login_api import LoginApi
 from generic.helpers.account import Account
 from generic.helpers.login import Login
 
-from generic.helpers.mailhog import MailHogApi
-
 
 class Faced:
-    def __init__(self, host, headers=None):
+    def __init__(self, host, mailhog=None, headers=None):
         self.account_api = AccountApi(host, headers)
         self.login_api = LoginApi(host, headers)
-        self.mailhog = MailHogApi()
+        self.mailhog = mailhog
         self.account = Account(self)
         self.login = Login(self)
