@@ -1,3 +1,5 @@
+import allure
+
 from dm_api_account.models import ResetPasswordModel, ChangeRegisteredUserPasswordModel, ChangeRegisteredUserEmailModel
 from dm_api_account.models import RegistrationModel
 
@@ -19,14 +21,15 @@ class Account:
             password: str,
             status_code: int = 201
     ):
-        response = self.faced.account_api.post_v1_account(
-            json=RegistrationModel(
-                login=login,
-                email=email,
-                password=password
-            ),
-            status_code=status_code
-        )
+        with allure.step('Регистрация пользователя'):
+            response = self.faced.account_api.post_v1_account(
+                json=RegistrationModel(
+                    login=login,
+                    email=email,
+                    password=password
+                ),
+                status_code=status_code
+            )
         return response
 
     def activate_registered_user(
@@ -37,10 +40,11 @@ class Account:
         token = self.faced.mailhog.get_token_by_login(
             login=login
         )
-        response = self.faced.account_api.put_v1_account_token(
-            token=token,
-            status_code=status_code
-        )
+        with allure.step('Активация зарегистрированного пользователя'):
+            response = self.faced.account_api.put_v1_account_token(
+                token=token,
+                status_code=status_code
+            )
 
         return response
 
@@ -48,8 +52,9 @@ class Account:
             self,
             **kwargs
     ):
-        response = self.faced.account_api.get_v1_account(**kwargs)
-        return response
+        with allure.step('Получение данных пользователя'):
+            response = self.faced.account_api.get_v1_account(**kwargs)
+            return response
 
     def reset_registered_user_password(
             self,
@@ -58,12 +63,13 @@ class Account:
             status_code: int = 200,
             **kwargs
     ):
-        response = self.faced.account_api.post_v1_account_password(
-            json=ResetPasswordModel(
-                login=login,
-                email=email),
-            status_code=status_code,
-            **kwargs)
+        with allure.step('Сброс пароля'):
+            response = self.faced.account_api.post_v1_account_password(
+                json=ResetPasswordModel(
+                    login=login,
+                    email=email),
+                status_code=status_code,
+                **kwargs)
         return response
 
     def change_registered_user_password(
@@ -77,15 +83,16 @@ class Account:
         token = self.faced.mailhog.get_token_for_reset_password(
             login=login
         )
-        response = self.faced.account_api.put_v1_account_password(
-            json=ChangeRegisteredUserPasswordModel(
-                login=login,
-                token=token,
-                oldPassword=password,
-                newPassword=new_password),
-            status_code=status_code,
-            **kwargs
-        )
+        with allure.step('Смена пароля'):
+            response = self.faced.account_api.put_v1_account_password(
+                json=ChangeRegisteredUserPasswordModel(
+                    login=login,
+                    token=token,
+                    oldPassword=password,
+                    newPassword=new_password),
+                status_code=status_code,
+                **kwargs
+            )
         return response
 
     def change_registered_user_email(
@@ -96,12 +103,13 @@ class Account:
             status_code: int = 200,
             **kwargs
     ):
-        response = self.faced.account_api.put_v1_account_email(
-            json=ChangeRegisteredUserEmailModel(
-                login=login,
-                password=password,
-                email=email),
-            status_code=status_code,
-            **kwargs
-        )
+        with allure.step('Смена электронного адреса'):
+            response = self.faced.account_api.put_v1_account_email(
+                json=ChangeRegisteredUserEmailModel(
+                    login=login,
+                    password=password,
+                    email=email),
+                status_code=status_code,
+                **kwargs
+            )
         return response

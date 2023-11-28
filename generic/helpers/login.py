@@ -1,3 +1,4 @@
+import allure
 import requests
 from dm_api_account.models import AuthenticateViaCredentialsModel
 
@@ -37,7 +38,8 @@ class Login:
             login=login,
             password=password
         )
-        token = {'X-Dm-Auth-Token': response.headers.get('X-Dm-Auth-Token')}
+        with allure.step('Получение токена для авторизации'):
+            token = {'X-Dm-Auth-Token': response.headers.get('X-Dm-Auth-Token')}
         return token
 
     def logout_user(

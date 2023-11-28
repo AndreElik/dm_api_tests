@@ -1,5 +1,6 @@
 from typing import Tuple
 
+import allure
 import requests
 from requests import Response
 from ..models import *
@@ -27,10 +28,11 @@ class LoginApi:
         Logout as current user
         :return:
         """
-        response = self.client.delete(
-            path=f"/v1/account/login",
-            **kwargs
-        )
+        with allure.step('Разлогинивание пользователя'):
+            response = self.client.delete(
+                path=f"/v1/account/login",
+                **kwargs
+            )
         validate_status_code(
             response=response,
             status_code=status_code
@@ -46,11 +48,11 @@ class LoginApi:
         Logout from every device
         :return:
         """
-
-        response = self.client.delete(
-            path=f"/v1/account/login/all",
-            **kwargs
-        )
+        with allure.step('Разлогинивание пользователя со всех устройств'):
+            response = self.client.delete(
+                path=f"/v1/account/login/all",
+                **kwargs
+            )
         validate_status_code(
             response=response,
             status_code=status_code
@@ -69,12 +71,12 @@ class LoginApi:
         :param json authenticate_via_credentials_model
         :return:
         """
-
-        response = self.client.post(
-            path=f"/v1/account/login",
-            json=validate_request_json(json),
-            **kwargs
-        )
+        with allure.step('Авторизация пользователя'):
+            response = self.client.post(
+                path=f"/v1/account/login",
+                json=validate_request_json(json),
+                **kwargs
+            )
         validate_status_code(
             response=response,
             status_code=status_code

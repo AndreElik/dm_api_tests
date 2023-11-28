@@ -1,5 +1,6 @@
 from typing import Any
 
+import allure
 from requests import Response
 from ..models import *
 from restclient.restclient import Restclient
@@ -30,12 +31,12 @@ class AccountApi:
         Register new user
         :return:
         """
-
-        response = self.client.post(
-            path=f"/v1/account",
-            json=validate_request_json(json),
-            **kwargs
-        )
+        with allure.step('Регистрация пользователя'):
+            response = self.client.post(
+                path=f"/v1/account",
+                json=validate_request_json(json),
+                **kwargs
+            )
         validate_status_code(
             response=response,
             status_code=status_code

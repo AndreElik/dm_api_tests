@@ -1,7 +1,9 @@
 from collections import namedtuple
 
+import allure
 import pytest
 
+from generic.assertion.post_v1_account import AssertionsPostV1Account
 from generic.helpers.dm_db import DmDatabase
 from generic.helpers.mailhog import MailHogApi
 from generic.helpers.orm_db import OrmDatabase
@@ -63,6 +65,17 @@ def orm_db():
     db.db.close_connection()
 
 
+@pytest.fixture()
+def assertions(dm_db):
+    return AssertionsPostV1Account(dm_db)
+
+
+@pytest.fixture()
+def assertions_with_orm_db(orm_db):
+    return AssertionsPostV1Account(orm_db)
+
+
+@allure.step('Подготовка нового пользователя')
 @pytest.fixture
 def prepare_user(dm_api_faced, dm_db):
     login = "user_476"

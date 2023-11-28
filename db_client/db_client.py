@@ -1,4 +1,7 @@
+import json
 import uuid
+
+import allure
 import records
 import structlog
 
@@ -10,12 +13,36 @@ structlog.configure(
     )])
 
 
+def allure_attach(fn):
+    def _wrapper(*args, **kwargs):
+        body = kwargs.get('query')
+        allure.attach(
+            body,
+            name='request',
+            attachment_type=allure.attachment_type.TEXT
+        )
+        dataset = fn(*args, **kwargs)
+
+        if dataset:
+            dataset_text = '; '.join([f'{key.capitalize()}: {value}' for key, value in dataset[0].items()])
+            if dataset:
+                allure.attach(
+                    dataset_text,
+                    name='response',
+                    attachment_type=allure.attachment_type.TEXT
+                )
+        return dataset
+
+    return _wrapper
+
+
 class DbClient:
     def __init__(self, user, password, host, database):
         connection_string = f'postgresql://{user}:{password}@{host}/{database}'
         self.db = records.Database(connection_string, isolation_level='AUTOCOMMIT')
         self.log = structlog.get_logger(self.__class__.__name__).bind(service='db')
 
+    @allure_attach
     def send_query(self, query):
         print(query)
         log = self.log.bind(event_id=str(uuid.uuid4()))
@@ -30,6 +57,7 @@ class DbClient:
         )
         return dataset
 
+    @allure_attach
     def send_bulk_query(self, query):
         print(query)
         log = self.log.bind(event_id=str(uuid.uuid4()))
