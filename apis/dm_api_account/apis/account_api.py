@@ -3,7 +3,7 @@ from typing import Any
 import allure
 from requests import Response
 from ..models import *
-from restclient.restclient import Restclient
+from common_libs.restclient import Restclient
 from dm_api_account.utilities import validate_request_json, validate_status_code
 from ..models import UserDetailsEnvelopeModel
 

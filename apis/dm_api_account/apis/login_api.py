@@ -1,10 +1,7 @@
-from typing import Tuple
-
 import allure
-import requests
 from requests import Response
 from ..models import *
-from restclient.restclient import Restclient
+from common_libs.restclient import Restclient
 from ..models import UserEnvelopeModel
 from ..utilities import validate_request_json, validate_status_code
 
