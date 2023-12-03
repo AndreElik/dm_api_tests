@@ -1,6 +1,5 @@
 import allure
-import requests
-from dm_api_account.models import AuthenticateViaCredentialsModel
+from apis.dm_api_account.models.authenticate_via_credentials_model import AuthenticateViaCredentialsModel
 
 
 class Login:

@@ -13,14 +13,14 @@ class OrmDatabase:
 
     def get_all_user(self) -> List[User]:
         query = select([User])
-        with allure.step('Пполучение всех пользователей из бд'):
+        with allure.step('Получение всех пользователей из бд'):
             dataset = self.db.send_query(query=query)
         return dataset
 
     def get_user_by_login(self, login) -> List[User]:
         query = select([User]).where(User.Login == login)
         print(query)
-        with allure.step('Пполучение пользователя из бд по логину'):
+        with allure.step('Получение пользователя из бд по логину'):
             dataset = self.db.send_query(query=query)
         return dataset
 

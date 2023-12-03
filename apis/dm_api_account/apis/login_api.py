@@ -1,7 +1,7 @@
 import allure
 from requests import Response
 from ..models import *
-from common_libs.restclient import Restclient
+from restclient.restclient import Restclient
 from ..models import UserEnvelopeModel
 from ..utilities import validate_request_json, validate_status_code
 

@@ -1,9 +1,7 @@
 import json
-import pprint
 import time
 
-import requests
-from requests import session, Response
+from requests import Response
 from restclient.restclient import Restclient
 
 

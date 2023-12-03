@@ -1,7 +1,7 @@
 import allure
 from hamcrest import assert_that, has_properties
 
-from dm_api_account.models.user_evelope_model import Roles, Rating, UserEnvelopeModel
+from apis.dm_api_account.models.user_evelope_model import Roles, Rating, UserEnvelopeModel
 from generic.helpers.dm_db import DmDatabase
 from generic.helpers.orm_db import OrmDatabase
 

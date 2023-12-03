@@ -1,11 +1,11 @@
-from typing import Any
+
 
 import allure
 from requests import Response
-from ..models import *
-from common_libs.restclient import Restclient
-from dm_api_account.utilities import validate_request_json, validate_status_code
-from ..models import UserDetailsEnvelopeModel
+
+from apis.dm_api_account.models import *
+from restclient.restclient import Restclient
+from apis.dm_api_account.utilities import validate_request_json, validate_status_code
 
 
 class AccountApi:

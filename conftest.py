@@ -3,6 +3,7 @@ from collections import namedtuple
 import allure
 import pytest
 
+from data.post_v1_account_data import PostV1AccounrData
 from generic.assertion.post_v1_account import AssertionsPostV1Account
 from generic.helpers.dm_db import DmDatabase
 from generic.helpers.mailhog import MailHogApi
@@ -78,11 +79,11 @@ def assertions_with_orm_db(orm_db):
 @allure.step('Подготовка нового пользователя')
 @pytest.fixture
 def prepare_user(dm_api_faced, dm_db):
-    login = "user_476"
-    email = "user_476@gmail.com"
-    password = "123456qwerty"
-    new_email = "user_376@mail.ru"
-    new_password = "777qwerty"
+    login = PostV1AccounrData.login
+    email = PostV1AccounrData.email
+    password = PostV1AccounrData.password
+    new_email = PostV1AccounrData.new_email
+    new_password = PostV1AccounrData.new_password
     dm_api_faced.mailhog.delete_all_messages()
     dm_db.delete_user_by_login(login=login)
     user = namedtuple('User', 'login, email, password, new_email, new_password')
