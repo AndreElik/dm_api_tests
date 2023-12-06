@@ -1,7 +1,7 @@
 import allure
 
 from apis.dm_api_account.models import ResetPasswordModel, ChangeRegisteredUserPasswordModel, ChangeRegisteredUserEmailModel
-from apis.dm_api_account import RegistrationModel
+from apis.dm_api_account.models import RegistrationModel
 
 
 class Account:
