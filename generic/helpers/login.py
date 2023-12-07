@@ -1,10 +1,11 @@
 import allure
-from dm_api_account.models.authenticate_via_credentials_model import AuthenticateViaCredentialsModel
+from dm_api_account.models import LoginCredentials
 
 
 class Login:
     def __init__(self, faced):
-        self.faced = faced
+        from services.dm_api_account import Faced
+        self.faced: Faced = faced
 
     def set_headers(
             self,
@@ -16,16 +17,14 @@ class Login:
             self,
             login: str,
             password: str,
-            remember_me: bool = True,
-            status_code: int = 200
+            remember_me: bool = True
     ):
-        response = self.faced.login_api.post_v1_account_login(
-            json=AuthenticateViaCredentialsModel(
+        response = self.faced.login_api.v1_account_login_post(
+            login_credentials=LoginCredentials(
                 login=login,
                 password=password,
-                rememberMe=remember_me
-            ),
-            status_code=status_code
+                remember_me=remember_me
+            )
         )
         return response
 
@@ -45,9 +44,9 @@ class Login:
             self,
             **kwargs
     ):
-        response = self.faced.login_api.delete_v1_account_login(**kwargs)
+        response = self.faced.login_api.v1_account_login_delete(**kwargs)
         return response
 
     def logout_user_all(self, **kwargs):
-        response = self.faced.login_api.delete_v1_account_login_all(**kwargs)
+        response = self.faced.login_api.v1_account_login_all_delete(**kwargs)
         return response

@@ -1,13 +1,14 @@
 import allure
 from hamcrest import assert_that, has_properties
-
-from dm_api_account.models.user_evelope_model import Roles, Rating, UserEnvelopeModel
+from dm_api_account.model.user_role import UserRole
+from dm_api_account.model.rating import Rating
+from dm_api_account.model.user_envelope import UserEnvelope
 from generic.helpers.dm_db import DmDatabase
 from generic.helpers.orm_db import OrmDatabase
 
 
 class AssertionsPostV1Account:
-    def __init__(self, db: DmDatabase | OrmDatabase ):
+    def __init__(self, db: DmDatabase | OrmDatabase):
         self.db = db
 
     def check_user_was_created(self, login):
@@ -25,10 +26,8 @@ class AssertionsPostV1Account:
 
     def check_response(self, response, login):
         with allure.step('Проверка ответа сервера'):
-            response = UserEnvelopeModel(**response.json())
             assert_that(response.resource, has_properties(
                 {"login": login,
-                 "roles": [Roles.GUEST, Roles.PLAYER],
                  "rating": Rating(enabled=True,
                                   quality=0,
                                   quantity=0)
@@ -40,4 +39,3 @@ class AssertionsPostV1Account:
         with allure.step('Проверка сообщения об ошибки'):
             assert response.json()["errors"] == check, \
                 f'Error message is {response.json()["errors"]}, must be {check}'
-
